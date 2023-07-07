@@ -40,6 +40,9 @@ dati = pd.read_excel("dati_convert.xlsx", index_col = 0, engine="openpyxl")
 percentage_pf = dati.pct_change()[1:]
 percentage_pf_no_conv = percentage_pf.iloc[:,:-1]
 
+
+
+
 inizio = st.date_input(
         "Data Inizio",
         datetime.date(2003, 1, 31),
@@ -57,9 +60,29 @@ fine = st.date_input(
 st.divider()
 
 
+
 percentage_pf_selezionato = percentage_pf["{}".format(inizio):  "{}".format(fine) ]
 percentage_pf_no_conv_selezionato = percentage_pf_no_conv["{}".format(inizio):  "{}".format(fine) ]
 
+
+st.subheader('Visualizzazione Asset Class')
+
+
+primo_plot = np.cumprod(1+percentage_pf_selezionato)
+
+plot1 = px.line(primo_plot,title="Ritorno di 1€ investito in ogni Asset Class", 
+              labels={
+                  "value": "Valore di 1€ investito",
+                  "index": "Data",
+                  "variable": "Asset Class"}, height = 800)
+
+plot1.update_layout(title_x=0.5, legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.01))
+#fig.show()
+
+st.plotly_chart(plot1, use_container_width=True)
+st.divider()
+
+st.subheader('Confronto Portafogli')
 
 
 rebalancing_date = np.arange(6,len(percentage_pf),6)
@@ -132,6 +155,9 @@ cum_ret = np.append(cum_ret,np.array(np.cumprod(1+np.array(lista_ritorni_drift_w
 cum_ret_no_conv = np.array([1])
 cum_ret_no_conv = np.append(cum_ret_no_conv,np.array(np.cumprod(1+np.array(lista_ritorni_drift_weights_no_conv))))
 
+cum_ret_solo_conv = np.array([1])
+cum_ret_solo_conv = np.append(cum_ret_solo_conv,np.array(np.cumprod(1+np.array(percentage_pf_selezionato.iloc[:,-1]))))
+
 
 indice_date = [inizio]
 
@@ -148,9 +174,12 @@ while start_date <= end_date:
 
 df = pd.DataFrame(cum_ret)
 df["Portafoglio Senza Conv. Bond"] = cum_ret_no_conv
+df["Refinitiv Glob. Hedged CB (EUR)"] = cum_ret_solo_conv
+
+
 df.index = indice_date
 
-df.columns = ["Portafoglio Con Conv. Bond", "Portafoglio Senza Conv. Bond"]
+df.columns = ["Portafoglio Con Conv. Bond", "Portafoglio Senza Conv. Bond","Refinitiv Glob. Hedged CB (EUR)"]
 
 fig = px.line(df,title="Confronto tra Portafogli", 
               labels={
@@ -167,6 +196,9 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
+
+
+
 previous_peak_no_conv = df["Portafoglio Senza Conv. Bond"].cummax()
 drawdown_no_conv = (df["Portafoglio Senza Conv. Bond"] - previous_peak_no_conv) / previous_peak_no_conv
 
@@ -174,12 +206,17 @@ previous_peak_conv = df["Portafoglio Con Conv. Bond"].cummax()
 drawdown_conv = (df["Portafoglio Con Conv. Bond"] - previous_peak_conv) / previous_peak_conv
 
 
+previous_peak_solo_conv = df["Refinitiv Glob. Hedged CB (EUR)"].cummax()
+drawdown__solo_conv = (df["Refinitiv Glob. Hedged CB (EUR)"] - previous_peak_solo_conv) / previous_peak_solo_conv
+
+
 dd_df = pd.DataFrame(drawdown_conv)
 dd_df["a"] = drawdown_no_conv
+dd_df["b"] = drawdown__solo_conv
 
-dd_df.columns = ["DD Portafoglio Con Conv. Bond", "DD Portafoglio Senza Conv. Bond"]
+dd_df.columns = ["DD Portafoglio Con Conv. Bond", "DD Portafoglio Senza Conv. Bond", "DD Refinitiv Glob. Hedged CB (EUR)"]
 
-fig1 = px.line(dd_df,title="Confronto tra i Draw Down cumulati dei Portafogli", 
+fig1 = px.line(dd_df,title="Confronto tra i Draw Down cumulati dei Portafogli e Conv. Bond", 
               labels={
                   "value": "Valore di 1€ investito",
                   "index": "Data",
@@ -205,7 +242,13 @@ stat = pd.read_excel("statistiche.xlsx", index_col = 0, engine="openpyxl")
 #statistiche = ["Ritorno Conv", "Ritorno no Conv", "Volatilità Conv","Volatilità no Conv" , "Max DD Conv","Max DD No Conv" ,"Sharpe Ratio Conv", "Sharpe Ratio no Conv"]
 #to_display = pd.DataFrame(index = statistiche, columns = anni)
 
+#def color_coding(row):
+ #   return ['background-color:red'] * len(
+  #      row) if row.col1 == 2 else ['background-color:green'] * len(row)
+
 st.dataframe(stat)
+
+#st.dataframe(stat.style.apply(color_coding, axis=1))
 
 st.subheader('Statistiche Aggregate per il Pf. con Conv. Bond rispetto a Pf. senza Conv. Bond')
 
