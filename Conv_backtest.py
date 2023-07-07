@@ -6,12 +6,10 @@ import plotly.express as px
 
 import pandas as pd
 import numpy as np
-import yfinance as yf
 
 import datetime
 import time
 
-from PIL import Image
 from dateutil.relativedelta import relativedelta
 
 #st.pyplot(fig)
