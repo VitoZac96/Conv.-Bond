@@ -271,7 +271,7 @@ st.markdown("In particolare, come mostrano i dati, l'asset class aiuta a ridurre
 
 st.markdown("Questo però, avviene a discapito dei ritorni assoluti. Infatti, un portafoglio che include i Conv. Bond, avrebbe battuto (in termini di ritorno annuale) solo 10 anni su 21 un portafoglio senza Conv. Bond.")
 
-st.markdown("La minor volatilità realizzata e i minori Draw Down, aiutano a generare Sharpe Ratio migliori nei periodi difficili.")
+st.markdown("La minor volatilità realizzata e i minori Draw Down, aiutano a generare Sharpe Ratio migliori nei periodi difficili, aiutando il ritorno di portafoglio nel lungo periodo.")
 
 #st.markdown("In definitiva, nel lungo periodo, gli effetti positivi di includere i Conv. Bond superano quelli negativi. L'inclusione dell'asset class aiuta a creare portafogli con un rapporto rischio-rendimento migliore.")
 
