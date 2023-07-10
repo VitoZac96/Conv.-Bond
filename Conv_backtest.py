@@ -253,8 +253,8 @@ st.dataframe(stat)
 st.subheader('Statistiche Aggregate per il Pf. con Conv. Bond rispetto a Pf. senza Conv. Bond')
 
 col1, col2, col3,col4 = st.columns(4)
-col1.metric("Ritorno Annuale Maggiore", "7 Anni", "su 21 (33%)")
-col2.metric("Volatilità Annuale Minore", "12 Anni", "Su 21 (57%)")
+col1.metric("Ritorno Annuale Maggiore", "10 Anni", "su 21 (48%)")
+col2.metric("Volatilità Annuale Minore", "13 Anni", "Su 21 (62%)")
 col3.metric("Draw Down Minore", "15 Anni", "Su 21 (71%)")
 col4.metric("Sharpe Ratio Maggiore", "11 Anni", "su 21 (52%)")
 
@@ -269,7 +269,7 @@ st.markdown("Includendo i Convertible Bond nell'asset allocation, nel lungo peri
 
 st.markdown("In particolare, come mostrano i dati, l'asset class aiuta a ridurre i draw down. Infatti, in 15 anni su 20 si sono registrati massimi Draw Down meno pesanti, con particolari benefici (fino al 3%) nei momenti più difficili come il 2008, il covid e il 2022 (vedi grafico sotto).")           
 
-st.markdown("Questo però, avviene a discapito dei ritorni assoluti. Infatti, un portafoglio che include i Conv. Bond, avrebbe battuto (in termini di ritorno annuale) solo 7 anni su 21 un portafoglio senza Conv. Bond.")
+st.markdown("Questo però, avviene a discapito dei ritorni assoluti. Infatti, un portafoglio che include i Conv. Bond, avrebbe battuto (in termini di ritorno annuale) solo 10 anni su 21 un portafoglio senza Conv. Bond.")
 
 st.markdown("Tuttavia, la minor volatilità realizzata e i minori Draw Down, fanno registrare uno Sharpe Ratio maggiore al portavoglio con Conv. Bond il 52% delle volte (11 anni su 21).")
 
