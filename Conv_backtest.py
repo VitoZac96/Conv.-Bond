@@ -254,7 +254,7 @@ st.subheader('Statistiche Aggregate per il Pf. con Conv. Bond rispetto a Pf. sen
 
 col1, col2, col3,col4 = st.columns(4)
 col1.metric("Ritorno Annuale Maggiore", "10 Anni", "su 21 (48%)")
-col2.metric("Volatilità Annuale Minore", "13 Anni", "Su 21 (62%)")
+col2.metric("Volatilità Annuale Minore", "12 Anni", "Su 21 (57%)")
 col3.metric("Draw Down Minore", "16 Anni", "Su 21 (76%)")
 col4.metric("Sharpe Ratio Maggiore", "8 Anni", "su 21 (38%)")
 
